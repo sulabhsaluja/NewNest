@@ -133,7 +133,7 @@ https://newsdata.io/api/1/news?q=kanpur&country=in&language=en&apikey=YOUR_API_K
 
 ## ✍️ Author
 
-Made with ❤️ by **Sulabh**
+Made by **Sulabh**
 
 > Full-stack project with real API & MongoDB integration.
 
