@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NewsNest</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  <nav class="navbar">
+  <a href="/" class="app-name">NewsNest</a>
+
+  
+
+  <!-- Navigation links -->
+  <div class="nav-links" id="nav-links">
+    {{#if session.userId}}
+      <a href="/dashboard">Dashboard</a>
+      <a href="/favorites">Favorite City</a>
+      <a href="/saved">Saved News</a>
+      <a href="/history">History</a>
+      <a href="/logout">Logout</a>
+    {{else}}
+      <a href="/login">Login</a>
+      <a href="/signup">Sign Up</a>
+    {{/if}}
+  </div>
+
+  <!-- Right section: hamburger + theme toggle -->
+  <div class="nav-controls">
+    <button id="theme-toggle" aria-label="Toggle dark/light theme">🌓</button>
+    <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu">&#9776;</button>
+  </div>
+</nav>
+
+
+  {{{body}}}
+
+  <!-- JS for theme + hamburger toggle -->
+  <script>
+    const toggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const navLinks = document.getElementById('nav-links');
+
+    // Apply dark theme from localStorage
+    if (localStorage.getItem('theme') === 'dark') {
+      body.classList.add('dark');
+    }
+
+    // Toggle dark/light theme
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Toggle nav links on small screens
+    hamburgerBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

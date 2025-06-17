@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+
+    <div class="favorites-container">
+      <h2 class="favorites-title">🌆 Your Favorite Cities</h2>
+
+      <form action="/favorites" method="POST" class="favorites-form">
+        <input type="text" name="city" placeholder="Add new favorite city"
+          required class="favorites-input" />
+        <button type="submit" class="favorites-add-btn">Add</button>
+      </form>
+
+      {{#if cities.length}}
+      <ul class="favorites-list">
+        {{#each cities}}
+        <li class="favorite-item">
+          <span class="city-name">{{this.city}}</span>
+          <form action="/favorites/delete" method="POST" class="delete-form">
+            <input type="hidden" name="city" value="{{this.city}}">
+            <button type="submit" class="delete-btn"
+              aria-label="Remove favorite city">❌</button>
+          </form>
+        </li>
+        {{/each}}
+      </ul>
+      {{else}}
+      <p class="no-cities-msg">No favorite cities saved yet.</p>
+      {{/if}}
+
+      <div class="nav-links">
+        <a href="/dashboard">🏠 Dashboard</a> |
+        <a href="/saved">📌 Saved</a> |
+        <a href="/history">📜 History</a> |
+        <a href="/logout" class="logout-link">🚪 Logout</a>
+      </div>
+    </div>
+  </body>
+</html>

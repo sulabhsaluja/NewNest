@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container history-container">
+      <h2 class="history-heading">📜 Your Search History</h2>
+
+      {{#if history.length}}
+      <ul class="history-list">
+        {{#each history}}
+        <li class="history-item">
+          {{this.city}} – {{this.searchedAt}}
+        </li>
+        {{/each}}
+      </ul>
+      {{else}}
+      <p>No search history yet.</p>
+      {{/if}}
+
+      <div class="nav-links">
+        <a href="/dashboard">🏠 Dashboard</a> |
+        <a href="/saved">📌 Saved</a> |
+        <a href="/favorites">🌆 Favorites</a> |
+        <a href="/logout" class="logout-link">🚪 Logout</a>
+      </div>
+    </div>
+
+  </body>
+</html>

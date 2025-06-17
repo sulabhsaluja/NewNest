@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+
+    <div class="saved-container">
+      <h2 class="saved-title">📌 Your Saved News</h2>
+
+      {{#if news.length}}
+      {{#each news}}
+      <div class="news-card">
+        <strong>{{this.title}}</strong><br>
+        <a href="{{this.link}}" target="_blank" rel="noopener noreferrer"
+          class="read-link">Read</a>
+      </div>
+      {{/each}}
+      {{else}}
+      <p class="no-news-msg">You haven’t saved any articles yet.</p>
+      {{/if}}
+
+      <div class="nav-links">
+        <a href="/dashboard">🏠 Dashboard</a> |
+        <a href="/history">📜 History</a> |
+        <a href="/favorites">🌆 Favorites</a> |
+        <a href="/logout" class="logout-link">🚪 Logout</a>
+      </div>
+    </div>
+
+  </body>
+</html>
