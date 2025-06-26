@@ -353,6 +353,88 @@ body.dark .news-card a {
   color: #f59e0b;
 }
 
+
+
+
+
+/* ===== FAVORITE CITIES LIST ===== */
+.favorites-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.favorite-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f0f4f8;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease;
+}
+.favorites-add-btn{
+  background-color: #2563eb;
+  color: white;
+  font-weight: 400;
+}
+
+.favorite-item:hover {
+  background-color: #e5efff;
+}
+
+.city-name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #1e3a8a;
+  overflow-wrap: break-word;
+}
+
+.delete-form {
+  margin: 0;
+}
+
+.delete-btn {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #dc2626;
+}
+
+/* ===== DARK MODE SUPPORT FOR FAVORITES ===== */
+body.dark .favorite-item {
+  background-color: #1e293b;
+}
+
+body.dark .favorite-item:hover {
+  background-color: #334155;
+}
+
+body.dark .city-name {
+  color: #facc15;
+}
+
+body.dark .delete-btn {
+  background-color: #dc2626;
+}
+
+body.dark .delete-btn:hover {
+  background-color: #b91c1c;
+}
+
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .hamburger {
