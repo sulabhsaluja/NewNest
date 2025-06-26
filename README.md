@@ -6,7 +6,7 @@
 
 ## 🌐 Live Site
 
-🚀 [https://newsnest-szje.onrender.com](https://newsnest-szje.onrender.com/)  
+🚀 Live Website: [https://newsnest-szje.onrender.com](https://newsnest-szje.onrender.com/)  
 
 🔗 GitHub: [github.com/sulabhsaluja/NewsNest](https://github.com/sulabhsaluja/NewsNest)
 
