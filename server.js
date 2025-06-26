@@ -68,49 +68,20 @@ app.get('/', (req, res) => {
 
 app.post('/news', async (req, res) => {
   const city = req.body.city.trim();
-  const inputDate = req.body.date.trim(); // dd-mm-yyyy or dd/mm/yyyy
-  const apiKey = process.env.GNEWS_API_KEY;
-
-  // Convert dd-mm-yyyy or dd/mm/yyyy → yyyy-mm-dd
-  const parts = inputDate.includes('-') ? inputDate.split('-') : inputDate.split('/');
-  if (parts.length !== 3) {
-    return res.send("❌ Invalid date format. Please use dd-mm-yyyy.");
-  }
-
-  const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`; // yyyy-mm-dd
-
-  const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(city)}&lang=en&country=in&from=${formattedDate}&to=${formattedDate}&token=${apiKey}`;
+  const apiKey = process.env.NEWSDATA_API_KEY;
+  const url = `https://newsdata.io/api/1/news?apikey=${apiKey}&q=${encodeURIComponent(city)}&country=in&language=en`;
 
   try {
     const response = await axios.get(url);
-
-    const filteredArticles = (response.data.articles || []).filter(article =>
-      (article.title && article.title.toLowerCase().includes(city.toLowerCase())) ||
-      (article.description && article.description.toLowerCase().includes(city.toLowerCase())) ||
-      (article.content && article.content.toLowerCase().includes(city.toLowerCase()))
-    );
-
     if (req.session.userId) {
       await SearchHistory.create({ userId: req.session.userId, city });
     }
-
-    res.render('results', {
-      city,
-      date: formattedDate,
-      articles: filteredArticles.map(a => ({
-        title: a.title,
-        link: a.url
-      }))
-    });
-
+    res.render('results', { city, articles: response.data.results || [] });
   } catch (err) {
-    console.error("GNews API error:", err.message);
-    res.send("❌ GNews API error: " + (err.response?.data?.message || err.message));
+    console.error("API error:", err);
+    res.send('API error: ' + (err.response?.data?.message || err.message));
   }
 });
-
-
-
 
 app.post('/save-news', async (req, res) => {
   if (!req.session.userId) return res.redirect('/login');
