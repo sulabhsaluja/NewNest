@@ -169,6 +169,7 @@ button:hover,
   color: gray;
   opacity: 0.6;
   align-self: flex-end;
+  display: none;
 }
 
 .save-form {
@@ -496,5 +497,8 @@ body.dark .delete-btn:hover {
   .save-button,
   .save-disabled {
     font-size: 1.1rem;
+  }
+  .save-disabled{
+    display: none;
   }
 }
