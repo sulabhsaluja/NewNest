@@ -18,14 +18,20 @@
       </p>
       {{/if}}
       <form action="/news" method="POST">
-        <input
-          type="text"
-          name="city"
-          placeholder="Enter city name"
-          required
-          aria-label="City name to search news">
-        <button type="submit">Search</button>
-      </form>
+  <input
+    type="text"
+    name="city"
+    placeholder="Enter city name"
+    required>
+  <input
+    type="text"
+    name="date"
+    placeholder="Enter date (dd-mm-yyyy)"
+    required>
+  <button type="submit">Search</button>
+</form>
+
+
     </div>
 
   </body>
