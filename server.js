@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const axios = require('axios');
 const path = require('path');
-const rateLimit = require('express-rate-limit'); // For rate limiting
-const cors = require('cors'); // For CORS support
+const rateLimit = require('express-rate-limit');
+const cors = require('cors');
 
 const User = require('./models/User');
 const SavedNews = require('./models/SavedNews');
@@ -13,7 +13,7 @@ const SearchHistory = require('./models/SearchHistory');
 const FavoriteCity = require('./models/FavoriteCity');
 const requireLogin = require('./middleware/auth');
 
-const authRoutes = require('./routes/auth'); // Make sure path is correct
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
@@ -25,39 +25,49 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => console.log('✅ Connected to MongoDB Atlas'))
 .catch((err) => console.error('❌ Connection error:', err));
 
-// Middleware setup
+// View Engine & Middleware
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: true }));
 app.set('view options', { layout: 'layouts/main' });
 
-// Rate limiting for login attempts
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+
+// Rate Limiter
 const loginLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
   message: "Too many login attempts, please try again later."
 });
 
-// Session configuration
+// Session
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'supersecretkey', // Use environment variable
+  secret: process.env.SESSION_SECRET || 'supersecretkey',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-    httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24 // 1 day
   }
 }));
 
+const flash = require('connect-flash');
+app.use(flash());
+// After app.use(flash())
 app.use((req, res, next) => {
-  res.locals.session = req.session;
+  res.locals.success_msg = req.flash('success');
+  res.locals.error_msg = req.flash('error');
   next();
 });
 
-// CORS support (if needed)
-app.use(cors());
+// Session Middleware for Templates
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = !!req.session.userId;
+  res.locals.userName = req.session.userName || null;
+  next();
+});
 
 // Routes
 app.use('/', authRoutes);
@@ -95,10 +105,10 @@ app.get('/logout', (req, res) => {
 });
 
 // Dashboard
-app.get('/dashboard', requireLogin, async(req, res) => {
+app.get('/dashboard', requireLogin, async (req, res) => {
   const user = await User.findById(req.session.userId);
+  req.session.userName = user.name; // Update name in session (optional redundancy)
   res.render('dashboard', { userName: user.name });
-
 });
 
 // Saved News
@@ -131,7 +141,7 @@ app.post('/favorites/delete', requireLogin, async (req, res) => {
   res.redirect('/favorites');
 });
 
-// Error handling middleware
+// Error Handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');

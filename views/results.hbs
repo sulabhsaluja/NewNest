@@ -1,45 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="container">
-      <h2 class="page-heading">Top News for "{{city}}"</h2>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top News - NewsNest</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h2 class="page-heading">Top News for "{{city}}"</h2>
 
-      {{#if articles.length}}
+    {{#if articles.length}}
       {{#each articles}}
-      <div class="news-card">
-        <div class="news-content">
-          <strong>{{this.title}}</strong><br>
-          <a href="{{this.link}}" target="_blank" rel="noopener noreferrer"
-            class="news-link">Read full article</a>
-        </div>
+        <div class="news-card">
+          <div class="news-content">
+            <strong>{{this.title}}</strong><br>
+            <a href="{{this.link}}" target="_blank" rel="noopener noreferrer" class="news-link">
+              Read full article
+            </a>
+          </div>
 
-        {{#if ../session.userId}}
-        <form action="/save-news" method="POST" class="save-form">
-          <input type="hidden" name="title" value="{{this.title}}">
-          <input type="hidden" name="link" value="{{this.link}}">
-          <button type="submit" class="save-button"
-            aria-label="Save article to favorites">
-            💾
-          </button>
-        </form>
-        {{else}}
-        <div class="save-disabled" title="Login to save articles">
-          💾
+          {{#if ../isAuthenticated}}
+            <form action="/save-news" method="POST" class="save-form">
+              <input type="hidden" name="title" value="{{this.title}}">
+              <input type="hidden" name="link" value="{{this.link}}">
+              <button type="submit" class="save-button" aria-label="Save article">💾</button>
+            </form>
+          {{else}}
+            <div class="save-disabled" title="Login to save articles">💾</div>
+          {{/if}}
         </div>
-        {{/if}}
-      </div>
       {{/each}}
-      {{else}}
+    {{else}}
       <p>No articles found for "{{city}}".</p>
-      {{/if}}
+    {{/if}}
 
-      <br>
-      <a class="back-link" href="/">🔙 Search again</a>
-    </div>
-  </body>
+    <br>
+    <a class="back-link" href="/">🔙 Search again</a>
+  </div>
+</body>
 </html>
