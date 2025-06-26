@@ -137,21 +137,11 @@ app.post('/news', async (req, res) => {
 });
 
 // Save news route
-app.post('/save-news', requireLogin, async (req, res) => {
-  try {
-    const { title, link } = req.body;
-    await SavedNews.create({ 
-      userId: req.session.userId, 
-      title, 
-      link,
-      savedAt: new Date()
-    });
-    req.flash('success', 'Article saved successfully');
-  } catch (err) {
-    console.error("Save error:", err);
-    req.flash('error', 'Failed to save article');
-  }
-  res.redirect('back');
+app.post('/save-news', async (req, res) => {
+  if (!req.session.userId) return res.redirect('/login');
+  const { title, link } = req.body;
+  await SavedNews.create({ userId: req.session.userId, title, link });
+  res.redirect('/');
 });
 
 // Logout route
