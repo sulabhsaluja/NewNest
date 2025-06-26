@@ -1,20 +1,19 @@
 # 📰 NewsNest - CityWise News Portal
 
-**NewsNest** is a full-featured Node.js web app that delivers **city-specific news headlines** from across India using a real-time **news API**. Built with Express and Handlebars, it includes login/signup, favorites, search history, and user dashboard.
+**NewsNest** is a full-featured Node.js web app that delivers **city-specific news headlines with date filtering** from across India using the real-time **GNews API**. Built with Express and Handlebars, it includes login/signup, favorites, search history, and a user dashboard.
 
 ---
 
 ## 🌐 Live Site
 
-🚀 [https://newsnest-szje.onrender.com](https://newsnest-szje.onrender.com/)  
-
+🚀 Live Website: [https://newsnest-szje.onrender.com](https://newsnest-szje.onrender.com/)  
 🔗 GitHub: [github.com/sulabhsaluja/NewsNest](https://github.com/sulabhsaluja/NewsNest)
 
 ---
 
 ## 📌 Features
 
-* 🔍 Search for news by **Indian city**
+* 🔍 Search for news by **Indian city and date**
 * 📚 **Search history** saved and displayed per user
 * ❤️ Save articles as **favorites**
 * 🧾 View your previously **saved news**
@@ -31,7 +30,7 @@
 | Express.js | Web framework                   |
 | Handlebars | View templating engine (`.hbs`) |
 | MongoDB    | MongoDB Atlas - `NewsNest` DB   |
-| Axios      | API requests to news provider   |
+| Axios      | API requests to GNews API       |
 | dotenv     | API key configuration           |
 
 ---
@@ -43,7 +42,7 @@
 ```bash
 git clone https://github.com/sulabhsaluja/NewsNest.git
 cd NewsNest
-```
+````
 
 ### 2. Install dependencies
 
@@ -57,7 +56,7 @@ Create a `.env` file in the root with:
 
 ```env
 MONGODB_URI=mongodb+srv://<your-user>:<your-pass>@<cluster>.mongodb.net/NewsNest?retryWrites=true&w=majority&appName=jobPortalCluster
-NEWS_API_KEY=your_newsdata_api_key
+GNEWS_API_KEY=your_gnews_api_key
 ```
 
 > ✅ Make sure the database name is `NewsNest` and user has read/write access.
@@ -114,12 +113,12 @@ NewsNest/
 
 ## 📡 API Integration
 
-Using [NewsData.io](https://newsdata.io/) API:
+Using [GNews.io](https://gnews.io/) API for city and date-based news search.
 
 **Sample Endpoint:**
 
 ```url
-https://newsdata.io/api/1/news?q=kanpur&country=in&language=en&apikey=YOUR_API_KEY
+https://gnews.io/api/v4/search?q=delhi&lang=en&country=in&from=2025-06-22&to=2025-06-22&token=YOUR_API_KEY
 ```
 
 ---
